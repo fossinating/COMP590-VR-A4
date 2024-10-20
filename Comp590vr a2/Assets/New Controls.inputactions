@@ -1,0 +1,54 @@
+{
+    "name": "New Controls",
+    "maps": [
+        {
+            "name": "New action map",
+            "id": "a8b47bf5-7dbf-4c27-a7a3-6fc05e87bfc7",
+            "actions": [
+                {
+                    "name": "left hand shoot",
+                    "type": "Button",
+                    "id": "e39fa16b-5a7e-4611-a5dc-ad8fb6c80776",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "right hand shoot",
+                    "type": "Button",
+                    "id": "1efb41d6-302b-4f40-b68b-f70271ae51b6",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "958ca370-7d63-4f9b-a7a3-c3cfcd5d2237",
+                    "path": "<XRController>{LeftHand}/triggerPressed",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "left hand shoot",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "7c11a01f-829f-4031-b82b-bca4e8413209",
+                    "path": "<XRController>{RightHand}/triggerPressed",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "right hand shoot",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}

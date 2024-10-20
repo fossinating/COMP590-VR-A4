@@ -2,9 +2,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
+using TMPro;
 using UnityEngine;
-using UnityEngine.InputSystem;
-using UnityEngine.InputSystem.EnhancedTouch;
 using UnityEngine.SocialPlatforms.Impl;
 using UnityEngine.UI;
 
@@ -15,19 +14,17 @@ public class GameManager : MonoBehaviour
     public int score = 0;
     public bool playing = false;
 
-    [SerializeField] Text startHighScoreLabel;
-    [SerializeField] Text deathHighScoreLabel;
-    [SerializeField] Text deathScoreLabel;
+    [SerializeField] TextMeshProUGUI menuMessageLabel;
+    [SerializeField] TextMeshProUGUI scoresLabel;
 
-    [SerializeField] Text statusLabel;
+    [SerializeField] TextMeshProUGUI statusLabel;
 
     [SerializeField] Canvas hud;
-    [SerializeField] Canvas startScreen;
-    [SerializeField] Canvas deathScreen;
+    [SerializeField] GameObject menu;
 
     [SerializeField] public SphericEnemy enemyPrefab;
     private float timeLeft;
-    private float waitTime = 7f;
+    private float waitTime = 5f;
     private float waitTimeReduce = .1f;
 
     // Start is called before the first frame update
@@ -36,10 +33,9 @@ public class GameManager : MonoBehaviour
         if (PlayerPrefs.HasKey("highscore"))
         {
             highscore = PlayerPrefs.GetInt("highscore");
-            startHighScoreLabel.text = "High Score: " + highscore.ToString();
+            scoresLabel.text = "High Score: " + highscore.ToString();
         }
         UpdateStatus();
-        EnhancedTouchSupport.Enable();
     }
 
     void UpdateStatus() {
@@ -47,7 +43,7 @@ public class GameManager : MonoBehaviour
     }
 
 
-    void StartGame()
+    public void StartGame()
     {
         Debug.Log("Starting game!");
         playerHealth = 3;
@@ -59,8 +55,7 @@ public class GameManager : MonoBehaviour
         }
         UpdateStatus();
         hud.gameObject.SetActive(true);
-        startScreen.gameObject.SetActive(false);
-        deathScreen.gameObject.SetActive(false);
+        menu.SetActive(false);
     }
 
     public void DamagePlayer()
@@ -91,17 +86,15 @@ public class GameManager : MonoBehaviour
         }
 
         hud.gameObject.SetActive(false);
-        deathScreen.gameObject.SetActive(true);
-        deathHighScoreLabel.text = "High Score: " + highscore.ToString();
-        deathScoreLabel.text = "Score: " + score.ToString();
+        menu.SetActive(true);
+        menuMessageLabel.text = "You Died!";
+        scoresLabel.text = "Score: " + score.ToString() + "\nHigh Score: " + highscore.ToString();
 
         foreach (SphericEnemy e in transform.parent.GetComponentsInChildren<SphericEnemy>())
         {
             e.Stop();
         }
     }
-
-    private bool wasPressed = false;
 
     void FixedUpdate()
     {
@@ -114,13 +107,6 @@ public class GameManager : MonoBehaviour
                 waitTime = Mathf.Max(1f, waitTime - waitTimeReduce);
                 timeLeft = waitTime;
             }
-        } else
-        {
-            if (!wasPressed && Touchscreen.current.press.isPressed)
-            {
-                StartGame();
-            }
-            wasPressed = Touchscreen.current.press.isPressed;
         }
     }
 }

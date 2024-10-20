@@ -19,10 +19,10 @@ public class GlowingProjectile : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        Destructible destructable = collision.gameObject.GetComponent<Destructible>();
-        if (destructable != null)
+        HitResponsive hitResponsive = collision.gameObject.GetComponent<HitResponsive>();
+        if (hitResponsive != null)
         {
-            destructable.Hit();
+            hitResponsive.Hit();
         }
         Destroy(gameObject);
     }

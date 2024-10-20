@@ -4,11 +4,8 @@ using UnityEngine;
 
 public class SphericEnemy : MonoBehaviour
 {
-    // https://discussions.unity.com/t/how-can-i-make-movement-on-a-sphere/12686/3
-    private const float radius = 11;
-    private float xAngle;
-    private float angle;
-    private const float speed = 3f;
+    private const float radius = 5;
+    private const float speed = 1f;
     private bool shouldMove = true;
 
     void Start()
@@ -17,24 +14,17 @@ public class SphericEnemy : MonoBehaviour
         transform.position = new Vector3(
             radius * Mathf.Sin(randAngle),
             0,
-            radius * Mathf.Cos(randAngle));
-        angle = Mathf.Atan(transform.position.z / transform.position.x);
-        xAngle = Mathf.Atan(transform.position.y / radius);
+            radius * Mathf.Cos(randAngle)) * radius;
     }
 
     void FixedUpdate()
     {
         if (!shouldMove) return;
-        xAngle += speed / radius * Time.fixedDeltaTime;
 
-        float h = radius * Mathf.Cos(xAngle);
 
-        transform.position = new Vector3(
-            h * Mathf.Cos(angle),
-            radius * Mathf.Sin(xAngle),
-            h * Mathf.Sin(angle));
+        transform.LookAt(Vector3.zero, Vector3.up);
 
-        transform.up = transform.position.normalized;
+        transform.position -= speed * Time.fixedDeltaTime * transform.forward;
     }
 
     public void Stop()
