@@ -24,7 +24,7 @@ public class SphericEnemy : MonoBehaviour
 
         transform.LookAt(Vector3.zero, Vector3.up);
 
-        transform.position -= speed * Time.fixedDeltaTime * transform.forward;
+        GetComponent<Rigidbody>().MovePosition(transform.position + speed * Time.fixedDeltaTime * transform.forward);
     }
 
     public void Stop()

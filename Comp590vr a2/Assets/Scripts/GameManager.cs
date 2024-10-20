@@ -34,6 +34,9 @@ public class GameManager : MonoBehaviour
         {
             highscore = PlayerPrefs.GetInt("highscore");
             scoresLabel.text = "High Score: " + highscore.ToString();
+        } else
+        {
+            scoresLabel.text = "High Score: 0";
         }
         UpdateStatus();
     }
@@ -49,13 +52,13 @@ public class GameManager : MonoBehaviour
         playerHealth = 3;
         score = 0;
         playing = true;
+        UpdateStatus();
+        menu.SetActive(false);
+        hud.gameObject.SetActive(true);
         foreach (SphericEnemy e in transform.parent.GetComponentsInChildren<SphericEnemy>())
         {
             e.Kill();
         }
-        UpdateStatus();
-        hud.gameObject.SetActive(true);
-        menu.SetActive(false);
     }
 
     public void DamagePlayer()
