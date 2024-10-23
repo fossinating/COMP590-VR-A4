@@ -24,9 +24,10 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] public SphericEnemy enemyPrefab;
     private float timeLeft;
-    private const float baseWaitTime = 5f;
+    private const float baseWaitTime = 4f;
+    private const float minWaitTime = 0.7f;
     private float waitTime = baseWaitTime;
-    private float waitTimeReduce = .1f;
+    private float waitTimeReduce = .2f;
 
     // Start is called before the first frame update
     void Start()
@@ -60,7 +61,7 @@ public class GameManager : MonoBehaviour
 
         foreach (SphericEnemy enemy in GameObject.FindObjectsOfType<SphericEnemy>())
         {
-            enemy.Stop();
+            enemy.Kill();
         }
     }
 
@@ -110,7 +111,7 @@ public class GameManager : MonoBehaviour
             if (timeLeft < 0)
             {
                 SphericEnemy enemy = Instantiate(enemyPrefab);
-                waitTime = Mathf.Max(1f, waitTime - waitTimeReduce);
+                waitTime = Mathf.Max(minWaitTime, waitTime - waitTimeReduce);
                 timeLeft = waitTime;
             }
         }

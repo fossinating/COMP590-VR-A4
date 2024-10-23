@@ -5,7 +5,7 @@ using UnityEngine;
 public class SphericEnemy : MonoBehaviour
 {
     private const float radius = 5;
-    private const float speed = 1f;
+    private const float speed = 1.5f;
     private bool shouldMove = true;
     public float timeAlive = 0f;
 
