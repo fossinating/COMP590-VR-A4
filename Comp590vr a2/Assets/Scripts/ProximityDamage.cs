@@ -18,14 +18,14 @@ public class ProximityDamage : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other == null || other.gameObject == null || other.gameObject.transform == null || other.gameObject.transform.parent == null || other.gameObject.transform.parent.gameObject == null)
+        if (other == null || other.gameObject == null || other.gameObject.transform == null)
         {
             return;
         }
-        if (other.gameObject.GetComponentInParent<SphericEnemy>() != null)
+        if (other.gameObject.GetComponent<SphericEnemy>() != null && other.gameObject.GetComponent<SphericEnemy>().timeAlive > 1)
         {
             GameObject.Find("Enemy Spawner").GetComponent<GameManager>().DamagePlayer();
-            Destroy(other.gameObject.transform.parent.gameObject);
+            Destroy(other.gameObject);
         }
     }
 }

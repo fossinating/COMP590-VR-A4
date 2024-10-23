@@ -13,7 +13,13 @@ public class Fire : MonoBehaviour
     [SerializeField] private InputActionReference triggerActionReference;
 
     float timeSinceLastShot = 1.0f;
-    const float shotCooldown = 1.0f;
+    const float shotCooldown = 0.2f;
+
+    const short maxBullets = 6;
+    short bullets = 6;
+
+    float timeSinceReload = 0f;
+    const float reloadSpeed = 0.5f;
 
     // Start is called before the first frame update
     void Start()
@@ -25,9 +31,18 @@ public class Fire : MonoBehaviour
     void FixedUpdate()
     {
         timeSinceLastShot += Time.fixedDeltaTime;
-        if (timeSinceLastShot > shotCooldown && triggerActionReference.action.IsPressed())
+        timeSinceReload += Time.fixedDeltaTime;
+        while (bullets < maxBullets && timeSinceReload > reloadSpeed)
+        {
+            bullets++;
+            timeSinceReload -= reloadSpeed; // do this to allow for multiple reloads at once if the game is lagging
+        }
+        if (bullets > 0 && timeSinceLastShot > shotCooldown && triggerActionReference.action.IsPressed())
         {
             SpawnProjectile();
+            bullets--;
+            timeSinceLastShot = 0;
+            timeSinceReload = (timeSinceReload > reloadSpeed) ? 0 : timeSinceReload;
         }
 
     }

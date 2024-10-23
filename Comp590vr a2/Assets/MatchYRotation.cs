@@ -10,6 +10,6 @@ public class MatchYRotation : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.AngleAxis(matchObject.transform.rotation.y, Vector3.up));
+        transform.SetLocalPositionAndRotation(transform.localPosition, Quaternion.AngleAxis(matchObject.transform.rotation.y, Vector3.up));
     }
 }

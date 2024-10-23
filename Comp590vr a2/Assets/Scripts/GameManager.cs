@@ -24,7 +24,8 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] public SphericEnemy enemyPrefab;
     private float timeLeft;
-    private float waitTime = 5f;
+    private const float baseWaitTime = 5f;
+    private float waitTime = baseWaitTime;
     private float waitTimeReduce = .1f;
 
     // Start is called before the first frame update
@@ -52,12 +53,14 @@ public class GameManager : MonoBehaviour
         playerHealth = 3;
         score = 0;
         playing = true;
+        waitTime = baseWaitTime;
         UpdateStatus();
         menu.SetActive(false);
         hud.gameObject.SetActive(true);
-        foreach (SphericEnemy e in transform.parent.GetComponentsInChildren<SphericEnemy>())
+
+        foreach (SphericEnemy enemy in GameObject.FindObjectsOfType<SphericEnemy>())
         {
-            e.Kill();
+            enemy.Stop();
         }
     }
 
@@ -88,15 +91,15 @@ public class GameManager : MonoBehaviour
             PlayerPrefs.Save();
         }
 
+        foreach (SphericEnemy enemy in GameObject.FindObjectsOfType<SphericEnemy>())
+        {
+            enemy.Stop();
+        }
+
         hud.gameObject.SetActive(false);
         menu.SetActive(true);
         menuMessageLabel.text = "You Died!";
         scoresLabel.text = "Score: " + score.ToString() + "\nHigh Score: " + highscore.ToString();
-
-        foreach (SphericEnemy e in transform.parent.GetComponentsInChildren<SphericEnemy>())
-        {
-            e.Stop();
-        }
     }
 
     void FixedUpdate()
